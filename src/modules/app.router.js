@@ -1,10 +1,14 @@
 import connectDB from '../../DB/connection.js'
 import CategoriesRouter from './categories/categories.router.js'
 import ProductsRouter from './products/products.router.js'
+import AuthRouter from './auth/auth.router.js'
 
 const initApp=(app,express)=>{
     app.use(express.json())
     connectDB();
+
+    app.use('/auth',AuthRouter);
+    
     app.use('/categories',CategoriesRouter);
     app.use('/products',ProductsRouter);
 
