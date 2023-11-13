@@ -1,11 +1,10 @@
 import mongoose,{Schema,Types,model} from "mongoose";
-const CategorySchema=new Schema({
+const subCategorySchema=new Schema({
     name:{
         type:String,
         required:true,
         unique:true,
-    },
-  
+    }, 
     image:{
         type:Object,
         required:true
@@ -19,20 +18,12 @@ const CategorySchema=new Schema({
         default:"Active",
         enum:["Active","InActive"]
     },
+    categoryId:{type:Types.ObjectId,ref:'Category',required:true},
     createdBy:{type:Types.ObjectId,ref:"User"},
     updateBy:{type:Types.ObjectId,ref:"User"}
 }
 ,{
-    timestamps:true,
-    toJSON:{virtuals:true},
-    toObject:{virtuals:true}
-
+    timestamps:true
 });
-CategorySchema.virtual('subcategory',{
-    localField:'_id',
-    foreignField :"categoryId",
-    ref:'subCategory'
-})
-
-const CategoryModel=mongoose.models.Category||model('Category',CategorySchema);
-export default CategoryModel;
+const subCategoryModel=mongoose.models.subCategory||model('subCategory',subCategorySchema);
+export default subCategoryModel;
