@@ -19,8 +19,8 @@ const CategorySchema=new Schema({
         default:"Active",
         enum:["Active","InActive"]
     },
-    createdBy:{type:Types.ObjectId,ref:"User"},
-    updateBy:{type:Types.ObjectId,ref:"User"}
+    createdBy:{type:Types.ObjectId,ref:"User",required:true},
+    updateBy:{type:Types.ObjectId,ref:"User",required:true}
 }
 ,{
     timestamps:true,
@@ -31,7 +31,7 @@ const CategorySchema=new Schema({
 CategorySchema.virtual('subcategory',{
     localField:'_id',
     foreignField :"categoryId",
-    ref:'subCategory'
+    ref:'SubCategory'
 })
 
 const CategoryModel=mongoose.models.Category||model('Category',CategorySchema);

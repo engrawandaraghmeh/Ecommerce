@@ -3,7 +3,7 @@ import CategoryModel from "../../../DB/model/category.model.js";
 import cloudinary from '../../services/cloudinary.js'
 
 export const getCategories=async(req,res)=>{
-    const caregories=await CategoryModel.find();
+    const caregories=await CategoryModel.find().populate('subcategory');
     return res.status(200).json({message:"Successful",caregories});
 }
 
@@ -17,7 +17,11 @@ export const CreateCategory=async(req,res)=>{
    const {secure_url,public_id}= await cloudinary.uploader.upload(req.file.path,{
         folder:`${process.env.AppName}/categories`
     })
-const cat=await CategoryModel.create({name,slug:slugify(name),image:{secure_url,public_id}});
+const cat=await CategoryModel.create({name,slug:slugify(name),image:{secure_url,public_id},
+createdBy:req.user._id,
+updateBy:req.user._id,
+
+});
 return res.status(201).json({message:"Successfuly",cat})
 }
 
@@ -55,6 +59,7 @@ export const updateCategory=async(req,res)=>{
         await cloudinary.uploader.destroy(category.image.public_id);
         category.image={secure_url,public_id};
     }
+    category.updateBy=req.user._id;
     await category.save();
     
     return res.status(200).json({message:"Success",category});

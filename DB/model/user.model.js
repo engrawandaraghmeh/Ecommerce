@@ -4,46 +4,40 @@ const UserSchema=new Schema({
         type:String,
         required:true,
         min:4,
-        max:20,
-    },
-    email:{
+        max:20, },email:{
         type:String,
         required:true,
-        unique:true
-    },
+        unique:true  },
     password:{
         type:String,
-        required:true
-    },
-    image:{
+        required:true }, image:{
         type:Object
     },
     phone:{
         type:String
     },
-    confirmemail:{
+    ConfirmEmail:{
         type:Boolean,
-        default:false
-    },
+        default:false },
     gender:{
         type:String,
-        enum:['Male','Female']
-    },
+        enum:['Male','Female']  },
     role:{
         type:String,
         default:"User",
         enum:['User','Admin']
-    },
-    status:{
+    }, status:{
         type:String,
         default:"Active",
         enum:['Active',"InActive"]
-    }
-
+    },
+    changePasswordTime:{
+     type:Date
+    },
+   
 }
 ,{
     timestamps:true
 });
-
 const UserModel=mongoose.models.User||model('User',UserSchema);
 export default UserModel;

@@ -1,8 +1,10 @@
 import { Router } from "express";
 import * as CouponController from './coupon.controller.js'
+import * as validator from './coupon.validation.js'
+import { validation } from "../../middleware/validation.js";
 const router=Router();
 
-router.post('/',CouponController.CreateCoupon);
+router.post('/',validation(validator.createCoupon),CouponController.CreateCoupon);
 
 router.get('/',CouponController.GetCoupon)
 
